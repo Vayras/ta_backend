@@ -32,7 +32,7 @@ use rand::thread_rng;       // For a random number generator
 // Define a structure for participant data relevant to student creation
 struct ParticipantInfo {
     name: String,
-    github: String, // MODIFIED: Changed from email to github
+    email: String, // REVERTED: Changed back from github to email
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -91,7 +91,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             exercise_good_documentation TEXT CHECK(exercise_good_documentation IN('yes','no')),
             exercise_good_structure     TEXT CHECK(exercise_good_structure IN('yes','no')),
             total                       REAL,
-            mail                        TEXT, -- This column will now store GitHub handles
+            mail                        TEXT, -- This column will now store Email addresses
             week                        INTEGER
         );
 
@@ -170,14 +170,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         ta_list.push(ta_name_result?);
     }
 
-    // MODIFIED: Fetch participant names and GitHub handles from the participants table
+    // REVERTED: Fetch participant names and Email addresses from the participants table
     let mut stmt_fetch_participants = conn.prepare(
-        "SELECT \"Name\", \"GitHub\" FROM participants WHERE \"Name\" IS NOT NULL AND \"GitHub\" IS NOT NULL"
+        "SELECT \"Name\", \"Email\" FROM participants WHERE \"Name\" IS NOT NULL AND \"Email\" IS NOT NULL"
     )?;
     let participants_iter = stmt_fetch_participants.query_map([], |row| {
         Ok(ParticipantInfo {
             name: row.get(0)?,
-            github: row.get(1)?, // MODIFIED: Changed from email to github
+            email: row.get(1)?, // REVERTED: Changed back from github to email
         })
     })?;
 
@@ -237,7 +237,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             "no",                                               // exercise_good_documentation (default false -> "no")
             "no",                                               // exercise_good_structure (default false -> "no")
             0.0,                                                // total
-            participant.github,                                 // MODIFIED: mail (now sourced from participant.github)
+            participant.email,                                  // REVERTED: mail (now sourced from participant.email)
             0                                                   // week (default 0)
         ]) {
             Ok(count) if count > 0 => student_records_created += 1,
