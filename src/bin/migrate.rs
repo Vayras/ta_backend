@@ -83,9 +83,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             fb                          REAL,
             fc                          REAL,
             fd                          REAL,
-            bonus_attendance            TEXT CHECK(bonus_attendance IN('yes','no')),
-            bonus_answer_quality        TEXT CHECK(bonus_answer_quality IN('yes','no')),
-            bonus_follow_up             TEXT CHECK(bonus_follow_up IN('yes','no')),
+            bonus_attempt               REAL,
+            bonus_answer_quality        REAL,
+            bonus_follow_up             REAL,
             exercise_submitted          TEXT CHECK(exercise_submitted IN('yes','no')),
             exercise_test_passing       TEXT CHECK(exercise_test_passing IN('yes','no')),
             exercise_good_documentation TEXT CHECK(exercise_good_documentation IN('yes','no')),
@@ -186,7 +186,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         INSERT INTO students (
             name, group_id, ta, attendance,
             fa, fb, fc, fd,
-            bonus_attendance, bonus_answer_quality, bonus_follow_up,
+            bonus_attempt, bonus_answer_quality, bonus_follow_up,
             exercise_submitted, exercise_test_passing, exercise_good_documentation, exercise_good_structure,
             total, mail, week
         ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18)
