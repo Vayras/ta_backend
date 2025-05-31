@@ -157,7 +157,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Populating students table...");
 
     // Define base groups (as in your JS `baseGroups` variable)
-    let base_groups = vec!["Group 1", "Group 2", "Group 3", "Group 4"];
+    let base_groups = vec!["Group 1", "Group 2", "Group 3", "Group 4","Group 5"];
     if base_groups.is_empty() {
         eprintln!("Warning: base_groups is empty. Students will not be assigned a group.");
     }

@@ -4,6 +4,8 @@ use actix_cors::Cors;
 use rusqlite::{Connection, params, Result as RusqliteResult, Transaction};
 use rand::seq::SliceRandom;
 use rand::thread_rng;
+// // mod classroom;
+// use classroom::get_env;
 
 // --- Struct Definitions ---
 #[derive(Deserialize, Serialize)]
@@ -220,6 +222,7 @@ async fn get_weekly_data_or_common(week: web::Path<i32>) -> impl Responder {
                 ("Group 2", "Bala"),
                 ("Group 3", "delcin"),
                 ("Group 4", "Beulah Evanjalin"),
+                ("Group 5", "Raj"),
             ];
 
             let (reassigned_group, assigned_ta) = match attendance.as_deref() {
@@ -228,13 +231,13 @@ async fn get_weekly_data_or_common(week: web::Path<i32>) -> impl Responder {
                     let group_idx = GROUP_COUNTER.with(|counter| {
                         let mut val = counter.borrow_mut();
                         let idx = *val - 1;
-                        *val = if *val == 4 { 1 } else { *val + 1 };
+                        *val = if *val == 5 { 1 } else { *val + 1 };
                         idx
                     });
                     let (group, ta) = group_ta_map[group_idx];
                     (group.to_string(), ta.to_string())
                 },
-                _ => ("Group 5 (Absent)".to_string(), "Saurabh".to_string()),
+                _ => ("Group 6 (Absent)".to_string(), "Saurabh".to_string()),
             };
 
         Ok(WeeklyInfo {
@@ -295,14 +298,14 @@ async fn get_weekly_data_or_common(week: web::Path<i32>) -> impl Responder {
                     let group_idx = GROUP_COUNTER.with(|counter| {
                         let mut val = counter.borrow_mut();
                         let idx = *val - 1;
-                        *val = if *val == 4 { 1 } else { *val + 1 };
+                        *val = if *val == 5 { 1 } else { *val + 1 };
                         idx
                     });
                     let group = format!("Group {}", group_idx + 1);
                     let ta = shuffled_tas.get(group_idx).cloned().unwrap_or_else(|| "Raj".to_string());
                     (group, ta)
                 },
-                _ => ("Group 5 (Absent)".to_string(), "Saurabh".to_string()),
+                _ => ("Group 6 (Absent)".to_string(), "Saurabh".to_string()),
             };
 
             Ok(WeeklyInfo {
